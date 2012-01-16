@@ -62,12 +62,12 @@ end
   asplode h unless have_header h
 end
 
-unless RUBY_PLATFORM =~ /mswin/ or RUBY_PLATFORM =~ /sparc/
+unless RUBY_PLATFORM =~ /mswin|sparc|solaris/
   $CFLAGS << ' -Wall -funroll-loops'
 end
 # $CFLAGS << ' -O0 -ggdb3 -Wextra'
 
-if hard_mysql_path = $libs[%r{-L(/[^ ]+)}, 1]
+if hard_mysql_path = $libs[%r{-L(/[^ ]+)}, 1] && RUBY_PLATFORM !~ /solaris/
 	$LDFLAGS << " -Wl,-rpath,#{hard_mysql_path}"
 end
 
